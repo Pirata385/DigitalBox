@@ -1,3 +1,1 @@
-export default function App() {
-  return <h1 className="placeholder">DigitalBox</h1>;
-}
+export { App as default } from './ui/App';

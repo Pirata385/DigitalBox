@@ -25,6 +25,7 @@ import {
   type PressInput,
 } from './interaction';
 import { commandFor, nudgeFor } from './keymap';
+import { setCursor } from './cursor';
 
 const INPUT_TYPES = new Set(['switch', 'button', 'word']);
 
@@ -206,8 +207,9 @@ export function Canvas(): ReactElement {
   };
 
   const onPointerMove = (e: ReactPointerEvent<SVGSVGElement>): void => {
-    if (!pointers.current.has(e.pointerId)) return;
     const s = localPoint(e.clientX, e.clientY);
+    setCursor(screenToWorld(editor.getState().view, s.x, s.y));
+    if (!pointers.current.has(e.pointerId)) return;
     pointers.current.set(e.pointerId, s);
     const g = gesture.current;
     if (g.kind === 'pinch') {
@@ -489,6 +491,7 @@ export function Canvas(): ReactElement {
       onPointerMove={onPointerMove}
       onPointerUp={(e) => endPointer(e, false)}
       onPointerCancel={(e) => endPointer(e, true)}
+      onPointerLeave={() => setCursor(null)}
     >
       <g transform={`translate(${view.panX} ${view.panY}) scale(${view.zoom})`}>
         <GridPattern zoom={view.zoom} />
