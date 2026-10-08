@@ -57,6 +57,8 @@ export interface EditorState {
   moveSelected(dx: number, dy: number): void;
   endMove(): void;
   rotateSelected(): void;
+  /** Keyboard nudge: moves the selection by an exact amount, never snapped, as one undo step. */
+  nudgeSelected(dx: number, dy: number): void;
   deleteSelected(): void;
   selectAll(): void;
   setSelection(sel: Selection): void;
@@ -220,6 +222,12 @@ export const editor: StoreApi<EditorState> = createStore<EditorState>()((set, ge
       const { doc, selection } = get();
       if (selection.components.length === 0) return;
       commit(rotateComponents(doc, selection.components, 1));
+    },
+
+    nudgeSelected(dx, dy) {
+      const { doc, selection } = get();
+      if (selection.components.length === 0) return;
+      commit(moveComponents(doc, selection.components, dx, dy));
     },
 
     deleteSelected() {

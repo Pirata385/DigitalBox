@@ -299,6 +299,12 @@ export class Simulator {
     return n === undefined ? floating(1) : this.netVal[n];
   }
 
+  /** True when the wire's net has two known drivers that disagree. */
+  wireConflict(wireId: string): boolean {
+    const n = this.netlist?.wireNet.get(wireId);
+    return n !== undefined && this.netConflict[n] === true;
+  }
+
   wireSig(wireId: string): Sig | undefined {
     const n = this.netlist?.wireNet.get(wireId);
     return n === undefined ? undefined : this.netVal[n];

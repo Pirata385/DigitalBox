@@ -256,6 +256,7 @@ describe('contention on shared nets', () => {
     );
     expect(sig(sim, 'probe', 'in')).toEqual(unknown(1));
     expect(sim.warnings().conflicts).toBeGreaterThanOrEqual(1);
+    expect(sim.wireConflict('w4')).toBe(true);
   });
 
   it('pull-up holds HIGH when nothing drives the net, and a driven LOW overrides it', () => {

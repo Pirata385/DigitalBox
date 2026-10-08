@@ -81,6 +81,15 @@ describe('editor store: wiring and selection', () => {
     expect(state().history.past.length).toBe(len);
   });
 
+  it('nudgeSelected moves by an exact amount, unsnapped, as one undo step', () => {
+    const id = state().addAt('not', 100, 100);
+    state().setSelection({ components: [id], wires: [] });
+    const before = state().history.past.length;
+    state().nudgeSelected(1, 0);
+    expect(state().doc.components[0].x).toBe(101);
+    expect(state().history.past.length).toBe(before + 1);
+  });
+
   it('deleteSelected removes the attached wires', () => {
     load(
       [
