@@ -1,0 +1,1156 @@
+/* ---------- Tokens (dark theme only) ---------- */
+:root {
+  color-scheme: dark;
+  --bg: #0b1020;
+  --canvas: #0f1729;
+  --panel: #111a2e;
+  --panel-2: #172238;
+  --border: #22304d;
+  --text: #e5e7eb;
+  --muted: #94a3b8;
+  --accent: #38bdf8;
+  --accent-ink: #04111d;
+  --hi: #34d399;
+  --lo: #475569;
+  --x: #f59e0b;
+  --z: #64748b;
+  --bus: #7dd3fc;
+  --conflict: #fb7185;
+  --warn: #fbbf24;
+  --danger: #f43f5e;
+  --radius: 10px;
+  --gutter: 16px;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font: 14px/1.4 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  overflow: hidden;
+}
+
+#root {
+  height: 100%;
+}
+
+button,
+select,
+input,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+/* ---------- App shell ---------- */
+.app {
+  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 10px;
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+  min-width: 0;
+  flex-wrap: wrap;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  margin-right: 4px;
+}
+
+.logo {
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--accent), #6366f1);
+  color: var(--accent-ink);
+  font-size: 16px;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  flex: 1;
+  min-width: 0;
+}
+
+.topbar-end {
+  display: flex;
+  gap: 6px;
+  margin-left: auto;
+}
+
+.group {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--panel-2);
+}
+
+.tool-btn,
+.menu-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 34px;
+  height: 34px;
+  padding: 0 8px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text);
+}
+
+.tool-btn:hover:not(:disabled),
+.menu-button:hover {
+  background: rgba(148, 163, 184, 0.12);
+}
+
+.tool-btn.is-on {
+  background: rgba(56, 189, 248, 0.18);
+  color: var(--accent);
+  border-color: rgba(56, 189, 248, 0.35);
+}
+
+.icon {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.speed {
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  padding: 0 6px;
+}
+
+.menu {
+  position: relative;
+}
+
+.menu-button {
+  list-style: none;
+  cursor: pointer;
+}
+
+.menu-button::-webkit-details-marker {
+  display: none;
+}
+
+.menu-panel {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 50;
+  min-width: 220px;
+  padding: 6px;
+  border-radius: var(--radius);
+  background: var(--panel);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  display: grid;
+  gap: 2px;
+}
+
+.menu-item {
+  text-align: left;
+  padding: 9px 10px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+}
+
+.menu-item:hover:not(:disabled) {
+  background: rgba(148, 163, 184, 0.14);
+}
+
+.menu-heading {
+  padding: 8px 10px 4px;
+  color: var(--muted);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* ---------- Workspace ---------- */
+.workspace {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 290px minmax(0, 1fr) 0;
+  grid-template-rows: minmax(0, 1fr);
+}
+
+.workspace.has-selection {
+  grid-template-columns: 290px minmax(0, 1fr) 280px;
+}
+
+.workspace.no-toolbox {
+  grid-template-columns: 0 minmax(0, 1fr) 0;
+}
+
+.workspace.no-toolbox.has-selection {
+  grid-template-columns: 0 minmax(0, 1fr) 280px;
+}
+
+.toolbox {
+  grid-column: 1;
+  grid-row: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--panel);
+  border-right: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.toolbox.is-hidden {
+  display: none;
+}
+
+.canvas-wrap {
+  grid-column: 2;
+  grid-row: 1;
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--canvas);
+}
+
+.canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  outline: none;
+  cursor: default;
+}
+
+.canvas:focus-visible {
+  outline: 1px solid rgba(56, 189, 248, 0.5);
+  outline-offset: -2px;
+}
+
+.inspector {
+  grid-column: 3;
+  grid-row: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 14px;
+  background: var(--panel);
+  border-left: 1px solid var(--border);
+}
+
+.toolbox-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px 6px;
+}
+
+.toolbox-head h2,
+.insp-head h2 {
+  margin: 0;
+  font-size: 15px;
+  flex: 1;
+}
+
+.sheet-handle {
+  display: none;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  min-height: 40px;
+  min-width: 56px;
+}
+
+.grab {
+  display: block;
+  width: 44px;
+  height: 5px;
+  margin: 0 auto;
+  border-radius: 3px;
+  background: var(--border);
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 4px 12px 8px;
+  padding: 0 10px;
+  height: 38px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--bg);
+}
+
+.search input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  outline: none;
+}
+
+.tabs {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 0 12px 8px;
+  scrollbar-width: thin;
+}
+
+.tab {
+  flex: 0 0 auto;
+  height: 32px;
+  padding: 0 11px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.tab.is-selected {
+  background: rgba(56, 189, 248, 0.16);
+  color: var(--accent);
+  border-color: rgba(56, 189, 248, 0.4);
+}
+
+.tool-grid {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
+  gap: 8px;
+  padding: 4px 12px 16px;
+  align-content: start;
+}
+
+.tool-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-height: 92px;
+  padding: 8px 6px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--text);
+  touch-action: none;
+}
+
+.tool-item:hover {
+  border-color: rgba(56, 189, 248, 0.5);
+}
+
+.thumb {
+  width: 56px;
+  height: 46px;
+}
+
+.tool-name {
+  font-size: 12px;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.empty {
+  grid-column: 1 / -1;
+  color: var(--muted);
+}
+
+.ghost {
+  position: fixed;
+  z-index: 100;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  width: 72px;
+  height: 58px;
+  padding: 4px;
+  border-radius: var(--radius);
+  background: rgba(17, 26, 46, 0.85);
+  border: 1px solid var(--accent);
+  box-shadow: var(--shadow);
+}
+
+.ghost .thumb {
+  width: 100%;
+  height: 100%;
+}
+
+.flash {
+  position: absolute;
+  left: 50%;
+  bottom: 14px;
+  transform: translateX(-50%);
+  max-width: min(92%, 520px);
+  padding: 9px 14px;
+  border-radius: 10px;
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  z-index: 40;
+  text-align: center;
+}
+
+/* ---------- Inspector ---------- */
+.insp-head {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.tip {
+  color: var(--muted);
+  margin: 4px 0 14px;
+}
+
+.field {
+  display: grid;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+.field span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.field input,
+.field select,
+.field textarea,
+.wide {
+  width: 100%;
+  min-height: 38px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.field textarea {
+  resize: vertical;
+}
+
+.wide {
+  margin: 4px 0 12px;
+}
+
+.readout {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  color: var(--accent);
+}
+
+.insp-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.insp-actions button {
+  min-height: 38px;
+  padding: 0 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--panel-2);
+}
+
+.insp-actions .danger {
+  color: var(--danger);
+  border-color: rgba(244, 63, 94, 0.4);
+}
+
+/* ---------- Status bar ---------- */
+.statusbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  padding: 6px 12px;
+  background: var(--panel);
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+}
+
+.statusbar .right {
+  margin-left: auto;
+}
+
+.pill {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+}
+
+.pill.is-running {
+  color: var(--hi);
+  border-color: rgba(52, 211, 153, 0.4);
+}
+
+.warn {
+  color: var(--warn);
+}
+
+.note {
+  color: var(--muted);
+}
+
+/* ---------- Canvas drawing ---------- */
+.grid-dot {
+  fill: #223250;
+}
+
+.wire {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+}
+
+.wire-hi {
+  stroke: var(--hi);
+}
+
+.wire-lo {
+  stroke: var(--lo);
+}
+
+.wire-x {
+  stroke: var(--x);
+  stroke-dasharray: 5 3;
+}
+
+.wire-z {
+  stroke: var(--z);
+  stroke-dasharray: 1.5 3;
+}
+
+.wire-bus {
+  stroke: var(--bus);
+}
+
+.wire-conflict {
+  stroke: var(--conflict);
+  stroke-dasharray: 2 2;
+}
+
+.wire.is-selected {
+  filter: drop-shadow(0 0 3px rgba(56, 189, 248, 0.9));
+}
+
+.wire-preview {
+  stroke: var(--accent);
+  stroke-width: 2;
+  stroke-dasharray: 5 4;
+}
+
+.pin {
+  fill: var(--bg);
+  stroke: #94a3b8;
+  stroke-width: 1.5;
+}
+
+.pin-hi {
+  fill: var(--hi);
+  stroke: var(--hi);
+}
+
+.pin-lo {
+  fill: var(--lo);
+  stroke: var(--lo);
+}
+
+.pin-x {
+  fill: var(--x);
+  stroke: var(--x);
+}
+
+.pin-z {
+  fill: var(--bg);
+  stroke: var(--z);
+  stroke-dasharray: 2 2;
+}
+
+.pin-bus {
+  fill: var(--bus);
+  stroke: var(--bus);
+}
+
+.pin-target {
+  stroke: var(--accent);
+  stroke-width: 2;
+}
+
+.marquee {
+  fill: rgba(56, 189, 248, 0.12);
+  stroke: var(--accent);
+  stroke-dasharray: 4 3;
+}
+
+.sel-box {
+  fill: none;
+  stroke: var(--accent);
+  stroke-dasharray: 4 3;
+  stroke-width: 1.2;
+}
+
+.sym-body {
+  fill: #151f35;
+  stroke: #94a3b8;
+  stroke-width: 1.6;
+}
+
+.sym-line {
+  stroke: #cbd5e1;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.sym-title {
+  fill: #cbd5e1;
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.sym-pin {
+  fill: #94a3b8;
+  font-size: 8px;
+}
+
+.sym-value {
+  fill: #f1f5f9;
+  font-size: 12px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.sym-rail {
+  fill: #e2e8f0;
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.sym-track {
+  fill: #0b1222;
+  stroke: #475569;
+}
+
+.sym-knob,
+.sym-cap {
+  fill: #64748b;
+  stroke: #cbd5e1;
+  stroke-width: 1.2;
+}
+
+.sym-knob.sym-on,
+.sym-cap.sym-on {
+  fill: var(--hi);
+}
+
+.sym-led-rim {
+  stroke: #0f172a;
+  stroke-width: 1;
+}
+
+.seg {
+  fill: #2a3650;
+}
+
+.seg-on {
+  fill: #fb7185;
+}
+
+.sym-note {
+  fill: rgba(30, 41, 59, 0.7);
+  stroke: #475569;
+  stroke-dasharray: 4 3;
+}
+
+.sym-note-text {
+  fill: #cbd5e1;
+  font-size: 12px;
+}
+
+.sym-junction {
+  fill: #cbd5e1;
+  stroke: none;
+}
+
+.part.is-selected .sym-body {
+  stroke: var(--accent);
+}
+
+/* ---------- Responsive ---------- */
+
+/* Phone or small tablet, portrait: the toolbox becomes a bottom sheet. */
+@media (max-width: 959px) and (min-height: 520px) {
+  .workspace,
+  .workspace.has-selection,
+  .workspace.no-toolbox,
+  .workspace.no-toolbox.has-selection {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .toolbox,
+  .canvas-wrap,
+  .inspector {
+    grid-column: 1;
+  }
+
+  .toolbox {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    max-height: 62%;
+    z-index: 30;
+    border-right: 0;
+    border-top: 1px solid var(--border);
+    border-radius: 16px 16px 0 0;
+    box-shadow: var(--shadow);
+    transform: translateY(calc(100% - 56px));
+    transition: transform 0.22s ease;
+  }
+
+  .toolbox.sheet-open {
+    transform: none;
+  }
+
+  .sheet-handle {
+    display: block;
+  }
+
+  .toolbox.is-hidden {
+    display: none;
+  }
+
+  .inspector {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    right: 8px;
+    max-height: 46%;
+    z-index: 25;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+
+  .tool-grid {
+    grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
+  }
+
+  .menu-button span {
+    display: none;
+  }
+}
+
+/* Landscape phone: the toolbox becomes a left drawer and the status bar is hidden. */
+@media (max-height: 519px) and (max-width: 959px) {
+  .topbar {
+    padding: 4px 8px;
+    gap: 6px;
+  }
+
+  .brand-name,
+  .menu-button span {
+    display: none;
+  }
+
+  .workspace,
+  .workspace.has-selection,
+  .workspace.no-toolbox,
+  .workspace.no-toolbox.has-selection {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .toolbox,
+  .canvas-wrap,
+  .inspector {
+    grid-column: 1;
+  }
+
+  .toolbox {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: min(320px, 60vw);
+    z-index: 30;
+    border-right: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    transform: translateX(-105%);
+    transition: transform 0.2s ease;
+  }
+
+  .toolbox.drawer-open {
+    transform: none;
+  }
+
+  .toolbox.is-hidden {
+    display: none;
+  }
+
+  .sheet-handle {
+    display: none;
+  }
+
+  .inspector {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: min(280px, 50vw);
+    max-height: 70%;
+    z-index: 25;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+
+  .statusbar {
+    display: none;
+  }
+}
+
+/* Phones in portrait: keep the top bar on one scrolling row, and move the tour card clear of the sheet. */
+@media (max-width: 959px) and (min-height: 520px) {
+  .topbar {
+    flex-wrap: nowrap;
+    padding: 4px 8px;
+  }
+
+  .toolbar {
+    flex: 1 1 0;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    scrollbar-width: none;
+  }
+
+  .brand-name {
+    display: none;
+  }
+
+  .tour-card {
+    top: 60px;
+    bottom: auto;
+  }
+}
+
+/* Touch screens: larger targets. */
+@media (pointer: coarse) {
+  .tool-btn,
+  .menu-button,
+  .tab,
+  .tool-item,
+  .menu-item,
+  .speed {
+    min-height: 40px;
+    min-width: 40px;
+  }
+}
+
+/* Narrow screens: keep the top bar on one line of icons. */
+@media (max-width: 720px) {
+  .group .tool-btn {
+    min-width: 36px;
+    padding: 0 6px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toolbox {
+    transition: none;
+  }
+}
+
+/* ---------- Tutorial ---------- */
+.tour {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+}
+
+.tour-spot {
+  position: fixed;
+  border-radius: 12px;
+  box-shadow: 0 0 0 2px var(--accent), 0 0 24px rgba(56, 189, 248, 0.35);
+  pointer-events: none;
+  transition: left 0.2s ease, top 0.2s ease, width 0.2s ease, height 0.2s ease;
+}
+
+.tour-card {
+  position: fixed;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+  width: min(420px, calc(100% - 32px));
+  pointer-events: auto;
+  padding: 16px 18px;
+  border-radius: 14px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+.tour-card h2 {
+  margin: 2px 0 6px;
+  font-size: 17px;
+}
+
+.tour-progress {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.tour-hint {
+  color: var(--warn);
+  font-size: 13px;
+}
+
+.tour-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.tour-actions .spacer {
+  flex: 1;
+}
+
+.tour-actions button {
+  min-height: 38px;
+  padding: 0 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--panel-2);
+}
+
+.tour-actions button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.tour-actions .quiet {
+  background: transparent;
+  color: var(--muted);
+}
+
+.tour-actions .primary {
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-color: transparent;
+  font-weight: 600;
+}
+
+@media (max-height: 519px) {
+  .tour-card {
+    bottom: 8px;
+    padding: 10px 12px;
+  }
+
+  .tour-card h2 {
+    font-size: 15px;
+  }
+
+  .tour-card p {
+    margin: 4px 0;
+  }
+}
+
+/* ---------- Dialogs ---------- */
+.dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: rgba(2, 6, 23, 0.6);
+}
+
+.dialog {
+  width: min(560px, 100%);
+  max-height: 86vh;
+  display: flex;
+  flex-direction: column;
+  border-radius: 14px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+.dialog-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.dialog-head h2 {
+  flex: 1;
+  margin: 0;
+  font-size: 16px;
+}
+
+.dialog-body {
+  padding: 14px;
+  overflow: auto;
+}
+
+.dialog-body p {
+  margin: 0 0 8px;
+}
+
+.shortcuts {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+}
+
+.shortcuts > div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+  gap: 12px;
+  align-items: baseline;
+}
+
+.shortcuts dt,
+.shortcuts dd {
+  margin: 0;
+}
+
+.shortcuts dd {
+  color: var(--muted);
+}
+
+kbd {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.example-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.example-list button {
+  width: 100%;
+  display: grid;
+  gap: 4px;
+  text-align: left;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+}
+
+/* Phones in portrait: the tour card sits under the top bar, clear of the sheet. Declared last so it wins over the base card rule. */
+@media (max-width: 959px) and (min-height: 520px) {
+  .tour-card {
+    top: 60px;
+    bottom: auto;
+  }
+}
+
+/* Phones in portrait: clip the collapsed sheet to the workspace so it cannot paint over the status bar. */
+@media (max-width: 959px) and (min-height: 520px) {
+  .workspace {
+    overflow: hidden;
+  }
+}
+
+/* Phones in portrait: messages go to the top, out of the way of the bottom sheet. */
+@media (max-width: 959px) and (min-height: 520px) {
+  .flash {
+    top: 8px;
+    bottom: auto;
+  }
+}
+
+/* Phones in portrait: File and the simulation controls come first on the top bar, so Run is on screen without scrolling. */
+@media (max-width: 959px) and (min-height: 520px) {
+  .toolbar > .menu {
+    order: -2;
+  }
+
+  .toolbar > .sim {
+    order: -1;
+  }
+}
