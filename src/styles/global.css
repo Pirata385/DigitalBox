@@ -878,6 +878,30 @@ button:disabled {
   }
 }
 
+/* Phones in portrait: keep the top bar on one scrolling row, and move the tour card clear of the sheet. */
+@media (max-width: 959px) and (min-height: 520px) {
+  .topbar {
+    flex-wrap: nowrap;
+    padding: 4px 8px;
+  }
+
+  .toolbar {
+    flex: 1 1 0;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    scrollbar-width: none;
+  }
+
+  .brand-name {
+    display: none;
+  }
+
+  .tour-card {
+    top: 60px;
+    bottom: auto;
+  }
+}
+
 /* Touch screens: larger targets. */
 @media (pointer: coarse) {
   .tool-btn,
@@ -1095,4 +1119,27 @@ kbd {
   border-radius: 10px;
   border: 1px solid var(--border);
   background: var(--bg);
+}
+
+/* Phones in portrait: the tour card sits under the top bar, clear of the sheet. Declared last so it wins over the base card rule. */
+@media (max-width: 959px) and (min-height: 520px) {
+  .tour-card {
+    top: 60px;
+    bottom: auto;
+  }
+}
+
+/* Phones in portrait: clip the collapsed sheet to the workspace so it cannot paint over the status bar. */
+@media (max-width: 959px) and (min-height: 520px) {
+  .workspace {
+    overflow: hidden;
+  }
+}
+
+/* Phones in portrait: messages go to the top, out of the way of the bottom sheet. */
+@media (max-width: 959px) and (min-height: 520px) {
+  .flash {
+    top: 8px;
+    bottom: auto;
+  }
 }

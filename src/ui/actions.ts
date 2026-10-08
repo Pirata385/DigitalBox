@@ -7,7 +7,7 @@ import { editor, simulator } from '../state/store';
 import { fitView, screenToWorld, zoomAt } from './interaction';
 
 /** Loads a save file's text into the editor. Problems are reported in the flash message. */
-export function loadText(text: string, source: string): boolean {
+export function loadText(text: string, source: string, fit = false): boolean {
   const s = editor.getState();
   const r = parseSave(text);
   if (!r.ok) {
@@ -17,6 +17,7 @@ export function loadText(text: string, source: string): boolean {
   s.loadCircuit({ name: r.data.name, components: r.data.components, wires: r.data.wires }, r.data.sim, r.data.view);
   s.setRunning(r.data.sim.running);
   s.setSpeed(r.data.sim.speed);
+  if (fit) fitAll();
   const fixed = r.warnings.length > 0 ? ` (${r.warnings.length} problem${r.warnings.length === 1 ? '' : 's'} fixed)` : '';
   s.patchUi({ flash: `Opened ${source}${fixed}` });
   return true;
@@ -43,7 +44,7 @@ export function newCircuit(): void {
 
 export function loadExample(id: string): void {
   const ex = EXAMPLES.find((e) => e.id === id);
-  if (ex) loadText(serializeSave(ex.build()), ex.title);
+  if (ex) loadText(serializeSave(ex.build()), ex.title, true);
 }
 
 /** Centre of the canvas in screen pixels, measured from the canvas element. */

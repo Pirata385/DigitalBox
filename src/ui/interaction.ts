@@ -4,6 +4,8 @@ import type { Dir } from '../sim/netlist';
 
 export const MIN_ZOOM = 0.2;
 export const MAX_ZOOM = 3;
+/** Automatic fitting stops here, so a small circuit is not blown up to fill the screen. */
+export const FIT_MAX_ZOOM = 1.5;
 
 export type PointerKind = 'mouse' | 'touch' | 'pen';
 
@@ -33,7 +35,7 @@ export function fitView(
   const bw = Math.max(1, box.x1 - box.x0);
   const bh = Math.max(1, box.y1 - box.y0);
   const fit = Math.min((width - 2 * pad) / bw, (height - 2 * pad) / bh);
-  const zoom = Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, fit));
+  const zoom = Math.min(FIT_MAX_ZOOM, Math.max(MIN_ZOOM, fit));
   const cx = (box.x0 + box.x1) / 2;
   const cy = (box.y0 + box.y1) / 2;
   return { zoom, panX: width / 2 - cx * zoom, panY: height / 2 - cy * zoom };
