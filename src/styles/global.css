@@ -904,3 +904,195 @@ button:disabled {
     transition: none;
   }
 }
+
+/* ---------- Tutorial ---------- */
+.tour {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+}
+
+.tour-spot {
+  position: fixed;
+  border-radius: 12px;
+  box-shadow: 0 0 0 2px var(--accent), 0 0 24px rgba(56, 189, 248, 0.35);
+  pointer-events: none;
+  transition: left 0.2s ease, top 0.2s ease, width 0.2s ease, height 0.2s ease;
+}
+
+.tour-card {
+  position: fixed;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+  width: min(420px, calc(100% - 32px));
+  pointer-events: auto;
+  padding: 16px 18px;
+  border-radius: 14px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+.tour-card h2 {
+  margin: 2px 0 6px;
+  font-size: 17px;
+}
+
+.tour-progress {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.tour-hint {
+  color: var(--warn);
+  font-size: 13px;
+}
+
+.tour-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.tour-actions .spacer {
+  flex: 1;
+}
+
+.tour-actions button {
+  min-height: 38px;
+  padding: 0 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--panel-2);
+}
+
+.tour-actions button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.tour-actions .quiet {
+  background: transparent;
+  color: var(--muted);
+}
+
+.tour-actions .primary {
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-color: transparent;
+  font-weight: 600;
+}
+
+@media (max-height: 519px) {
+  .tour-card {
+    bottom: 8px;
+    padding: 10px 12px;
+  }
+
+  .tour-card h2 {
+    font-size: 15px;
+  }
+
+  .tour-card p {
+    margin: 4px 0;
+  }
+}
+
+/* ---------- Dialogs ---------- */
+.dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: rgba(2, 6, 23, 0.6);
+}
+
+.dialog {
+  width: min(560px, 100%);
+  max-height: 86vh;
+  display: flex;
+  flex-direction: column;
+  border-radius: 14px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+.dialog-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.dialog-head h2 {
+  flex: 1;
+  margin: 0;
+  font-size: 16px;
+}
+
+.dialog-body {
+  padding: 14px;
+  overflow: auto;
+}
+
+.dialog-body p {
+  margin: 0 0 8px;
+}
+
+.shortcuts {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+}
+
+.shortcuts > div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+  gap: 12px;
+  align-items: baseline;
+}
+
+.shortcuts dt,
+.shortcuts dd {
+  margin: 0;
+}
+
+.shortcuts dd {
+  color: var(--muted);
+}
+
+kbd {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.example-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.example-list button {
+  width: 100%;
+  display: grid;
+  gap: 4px;
+  text-align: left;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+}

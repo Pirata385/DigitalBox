@@ -4,10 +4,12 @@ import { readAutosave, writeAutosave } from '../state/autosave';
 import { editor, simulator } from '../state/store';
 import { useEditor } from '../state/useEditor';
 import { Canvas } from './Canvas';
+import { Dialogs } from './Dialogs';
 import { Inspector } from './Inspector';
 import { SimController } from './SimController';
 import { StatusBar } from './StatusBar';
 import { Toolbox } from './Toolbox';
+import { Tutorial, tutorialDone } from './Tutorial';
 import { TopBar } from './TopBar';
 import { openCircuit, saveCircuit } from './actions';
 
@@ -40,6 +42,7 @@ export function App(): ReactElement {
 
   useEffect(() => {
     restoreSession();
+    if (!tutorialDone()) editor.getState().patchUi({ tutorialStep: 0 });
   }, []);
 
   // Autosave after changes settle. While the simulation runs, values change every frame, so only the stopped state is saved.
@@ -116,6 +119,8 @@ export function App(): ReactElement {
         <SimController />
       </div>
       <StatusBar />
+      <Tutorial />
+      <Dialogs />
     </div>
   );
 }
