@@ -104,6 +104,8 @@ export function Canvas(): ReactElement {
   const pointerKind = (type: string): PointerKind => (type === 'touch' ? 'touch' : type === 'pen' ? 'pen' : 'mouse');
 
   const startPinch = (): void => {
+    const g = gesture.current;
+    if (g.kind === 'move') editor.getState().abandonDrag(g.holdId);
     setOverlay({});
     const [a, b] = [...pointers.current.values()];
     const v = editor.getState().view;

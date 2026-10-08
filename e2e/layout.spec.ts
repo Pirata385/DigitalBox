@@ -30,3 +30,10 @@ for (const vp of viewports) {
     await page.screenshot({ path: `${dir}/${vp.name}.png` });
   });
 }
+
+test('portrait: File and the Run control are on screen without scrolling the top bar', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/');
+  await expect(page.locator('summary', { hasText: 'File' })).toBeInViewport();
+  await expect(page.getByRole('button', { name: 'Run simulation' })).toBeInViewport();
+});

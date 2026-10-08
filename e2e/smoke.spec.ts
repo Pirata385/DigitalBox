@@ -30,3 +30,20 @@ test('the Half adder example loads onto the canvas', async ({ page }) => {
   await expect(page.locator('.canvas [data-part]')).toHaveCount(6);
   await expect(page.locator('.canvas [data-wire]')).toHaveCount(6);
 });
+
+test('a touch-only device starts in Pan mode', async ({ page }) => {
+  await page.addInitScript(() => {
+    window.matchMedia = ((query: string) => ({
+      matches: query === '(pointer: coarse)',
+      media: query,
+      onchange: null,
+      addEventListener: () => {},
+      removeEventListener: () => {},
+      addListener: () => {},
+      removeListener: () => {},
+      dispatchEvent: () => false,
+    })) as unknown as typeof window.matchMedia;
+  });
+  await page.goto('/');
+  await expect(page.getByRole('button', { name: 'Pan tool' })).toBeVisible();
+});

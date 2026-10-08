@@ -151,3 +151,19 @@ describe('editor store: runtime inputs', () => {
     expect(state().history.past.length).toBe(len);
   });
 });
+
+describe('editor store: a drag ended by a second finger', () => {
+  it('abandonDrag keeps the movement made so far in history and releases a held button', () => {
+    load([['btn', 'button']]);
+    const x0 = state().doc.components[0].x;
+    state().setSelection({ components: ['btn'], wires: [] });
+    state().setInputValue('btn', 1);
+    state().beginMove();
+    state().moveSelected(40, 0);
+    state().abandonDrag('btn');
+    expect(state().doc.components[0].x).toBe(x0 + 40);
+    expect(simulator.getInput('btn')).toBe(0);
+    state().undo();
+    expect(state().doc.components[0].x).toBe(x0);
+  });
+});

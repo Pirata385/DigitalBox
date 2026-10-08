@@ -56,6 +56,8 @@ export interface EditorState {
   beginMove(): void;
   moveSelected(dx: number, dy: number): void;
   endMove(): void;
+  /** A second finger turned a one-finger drag into a pinch: keeps the movement so far and releases a held button. */
+  abandonDrag(holdId?: string): void;
   rotateSelected(): void;
   /** Keyboard nudge: moves the selection by an exact amount, never snapped, as one undo step. */
   nudgeSelected(dx: number, dy: number): void;
@@ -216,6 +218,11 @@ export const editor: StoreApi<EditorState> = createStore<EditorState>()((set, ge
       }
       set({ history: { ...get().history, present: base } });
       commit(doc);
+    },
+
+    abandonDrag(holdId) {
+      get().endMove();
+      if (holdId !== undefined) get().setInputValue(holdId, 0);
     },
 
     rotateSelected() {

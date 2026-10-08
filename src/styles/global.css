@@ -1143,3 +1143,14 @@ kbd {
     bottom: auto;
   }
 }
+
+/* Phones in portrait: File and the simulation controls come first on the top bar, so Run is on screen without scrolling. */
+@media (max-width: 959px) and (min-height: 520px) {
+  .toolbar > .menu {
+    order: -2;
+  }
+
+  .toolbar > .sim {
+    order: -1;
+  }
+}

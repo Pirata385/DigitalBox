@@ -7,6 +7,7 @@ import {
   marqueeHits,
   nearestPin,
   screenToWorld,
+  startingTool,
   wireAt,
   worldToScreen,
   zoomAt,
@@ -127,5 +128,16 @@ describe('drag threshold', () => {
   it('is false for 3 px and true for 5 px', () => {
     expect(dragExceeded(3, 0)).toBe(false);
     expect(dragExceeded(5, 0)).toBe(true);
+  });
+});
+
+describe('starting tool', () => {
+  it('a touch-only device starts in Pan mode, so one finger moves the view', () => {
+    expect(startingTool({ coarse: true, fine: false })).toBe('pan');
+  });
+
+  it('a device with a fine pointer starts in Select mode', () => {
+    expect(startingTool({ coarse: false, fine: true })).toBe('select');
+    expect(startingTool({ coarse: true, fine: true })).toBe('select');
   });
 });

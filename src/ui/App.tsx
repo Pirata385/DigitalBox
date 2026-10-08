@@ -12,6 +12,7 @@ import { Toolbox } from './Toolbox';
 import { Tutorial, tutorialDone } from './Tutorial';
 import { TopBar } from './TopBar';
 import { openCircuit, saveCircuit } from './actions';
+import { startingTool } from './interaction';
 
 const AUTOSAVE_DEBOUNCE_MS = 400;
 const FLASH_MS = 4000;
@@ -43,6 +44,8 @@ export function App(): ReactElement {
   useEffect(() => {
     restoreSession();
     if (!tutorialDone()) editor.getState().patchUi({ tutorialStep: 0 });
+    const media = (query: string): boolean => typeof window.matchMedia === 'function' && window.matchMedia(query).matches;
+    editor.getState().setTool(startingTool({ coarse: media('(pointer: coarse)'), fine: media('(any-pointer: fine)') }));
   }, []);
 
   // Autosave after changes settle. While the simulation runs, values change every frame, so only the stopped state is saved.

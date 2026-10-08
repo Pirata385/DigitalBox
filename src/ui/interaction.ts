@@ -9,6 +9,11 @@ export const FIT_MAX_ZOOM = 1.5;
 
 export type PointerKind = 'mouse' | 'touch' | 'pen';
 
+/** Touch-only devices start in Pan, so one finger moves the view. A device with a fine pointer starts in Select. */
+export function startingTool(caps: { coarse: boolean; fine: boolean }): 'select' | 'pan' {
+  return caps.coarse && !caps.fine ? 'pan' : 'select';
+}
+
 export function screenToWorld(v: View, sx: number, sy: number): Pt {
   return { x: (sx - v.panX) / v.zoom, y: (sy - v.panY) / v.zoom };
 }
